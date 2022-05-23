@@ -1,54 +1,47 @@
 package com.bridgelabz.employeepayrollapp.service;
 
-import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
-import com.bridgelabz.employeepayrollapp.model.Employee;
-import com.bridgelabz.employeepayrollapp.repository.EmployeePayrollRepository;
+import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
+import com.bridgelabz.employeepayrollapp.model.EmployeePayrollData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService{
-    @Autowired
-    EmployeePayrollRepository repo;
+    private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 
-    public String getMessage(String name) {
-        return "Welcome "+name;
+    @Override
+    public List<EmployeePayrollData> getEmployeePayrollData() {
+        return employeePayrollList;
     }
-    public String postMessage(EmployeeDTO employeeDTO) {
-        return "Hello "+employeeDTO.getFirstName()+""+employeeDTO.getLastName()+"!";
+
+    @Override
+    public EmployeePayrollData getEmployeePayrollDataById(int empId) {
+        return employeePayrollList.get(empId);
     }
-    public String putMessage(String name) {
-        return "How are you, "+name;
+
+    @Override
+    public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
+        EmployeePayrollData empData = null;
+        empData = new EmployeePayrollData(employeePayrollList.size()+1, empPayrollDTO);
+        employeePayrollList.add(empData);
+        return empData;
     }
-    public String getWelcome() {
-        return "Welcome to Employee Payroll !!!";
+
+    @Override
+    public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
+        EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
+        empData.setName(empPayrollDTO.name);
+        empData.setSalary(empPayrollDTO.salary);
+        employeePayrollList.set(empId-1, empData);
+        return empData;
     }
-    public Employee postDataToRepo(Employee employee) {
-        Employee newEmployee = new Employee(employee);
-        repo.save(newEmployee);
-        return newEmployee;
-    }
-    public List<Employee> getAllData(){
-        List<Employee> list=repo.findAll();
-        return list;
-    }
-    public Employee getDataById(Integer id) {
-        Optional<Employee> newEmployee = repo.findById(id);
-        if(newEmployee.isPresent())
-            return newEmployee.get();
-        else
-            return null;
-    }
-    public Employee updateDataById(Integer id,EmployeeDTO employeeDTO) {
-        Employee newEmployee = new Employee(id,employeeDTO);
-        repo.save(newEmployee);
-        return newEmployee;
-    }
-    public String deleteDataById(Integer id) {
-        repo.deleteById(id);
-        return null;
+
+    @Override
+    public void deleteEmployeePayrollData(int empId) {
+        employeePayrollList.remove(empId-1);
     }
 }
