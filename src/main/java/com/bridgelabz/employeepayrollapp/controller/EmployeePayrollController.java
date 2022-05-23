@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.controller;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.service.IEmployeePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmployeePayrollController {
@@ -47,8 +49,8 @@ public class EmployeePayrollController {
     }
     //ability to update employee data for particular id
     @PutMapping("/employeepayrollservice/update/{id}")
-    public ResponseEntity<Employee> updateDataInRepo(@PathVariable Integer id,@RequestBody Employee employee){
-        return new ResponseEntity<Employee>(service.updateDataById(id,employee),HttpStatus.OK);
+    public ResponseEntity<Employee> updateDataInRepo(@PathVariable Integer id,@RequestBody EmployeeDTO employeeDTO){
+        return new ResponseEntity<Employee>(service.updateDataById(id,employeeDTO),HttpStatus.OK);
     }
     //ability to delete employee data for particular id
     @DeleteMapping("/employeepayrollservice/delete/{id}")

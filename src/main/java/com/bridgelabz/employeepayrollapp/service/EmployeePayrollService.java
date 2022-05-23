@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.service;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeePayrollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         return "Welcome "+name;
     }
     public String postMessage(Employee employee) {
-        return "Hello "+employee.getFirstName()+" "+employee.getLastName()+"!";
+        return "Hello "+employee.getFirstName()+""+employee.getLastName()+"!";
     }
     public String putMessage(String name) {
         return "How are you, "+name;
@@ -26,8 +27,9 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         return "Welcome to Employee Payroll !!!";
     }
     public Employee postDataToRepo(Employee employee) {
-        repo.save(employee);
-        return employee;
+        Employee newEmployee = new Employee(employee);
+        repo.save(newEmployee);
+        return newEmployee;
     }
     public List<Employee> getAllData(){
         List<Employee> list=repo.findAll();
@@ -40,8 +42,8 @@ public class EmployeePayrollService implements IEmployeePayrollService{
         else
             return null;
     }
-    public Employee updateDataById(Integer id,Employee employee) {
-        Employee newEmployee = new Employee(id,employee.getFirstName(),employee.getLastName(),employee.getProfilePic(),employee.getDepartment(),employee.getSalary(),employee.getDate(),employee.getNotes());
+    public Employee updateDataById(Integer id,EmployeeDTO employeeDTO) {
+        Employee newEmployee = new Employee(id,employeeDTO);
         repo.save(newEmployee);
         return newEmployee;
     }

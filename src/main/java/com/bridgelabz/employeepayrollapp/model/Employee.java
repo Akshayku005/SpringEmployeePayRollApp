@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.model;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     private String firstName;
@@ -20,21 +21,29 @@ public class Employee {
     private LocalDate date;
     private String notes;
 
+    public Employee(EmployeeDTO dto) {
+        this.firstName = dto.getFirstName();
+        this.lastName = dto.getLastName();
+        this.profilePic = dto.getProfilePic();
+        this.department = dto.getDepartment();
+        this.salary =dto.getSalary();
+        this.date =dto.getDate();
+        this.notes =dto.getNotes();
+    }
 
     public Employee() {
         super();
     }
-    public Employee(Integer id, String firstName, String lastName, String profilePic, String department, Long salary,
-                    LocalDate date, String notes) {
+    public Employee(Integer id, EmployeeDTO employeeDTO) {
         super();
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.profilePic = profilePic;
-        this.department = department;
-        this.salary = salary;
-        this.date = date;
-        this.notes = notes;
+        this.firstName = employeeDTO.getFirstName();
+        this.lastName = employeeDTO.getLastName();
+        this.profilePic = employeeDTO.getProfilePic();
+        this.department = employeeDTO.getDepartment();
+        this.salary =employeeDTO.getSalary();
+        this.date =employeeDTO.getDate();
+        this.notes =employeeDTO.getNotes();
     }
     public Employee(Employee employee) {
         super();
