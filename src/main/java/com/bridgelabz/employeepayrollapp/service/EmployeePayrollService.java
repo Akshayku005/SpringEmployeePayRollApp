@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class EmployeePayrollService implements IEmployeePayrollService{
+public class EmployeePayrollService implements IEmployeePayrollService {
 
     @Autowired
     private EmployeePayrollRepository employeeRepository;
@@ -28,14 +28,19 @@ public class EmployeePayrollService implements IEmployeePayrollService{
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
         return employeeRepository
                 .findById(empId)
-                .orElseThrow( () -> new EmployeePayrollException("Employee with employeeId " + empId +" does not exists..!!"));
+                .orElseThrow(() -> new EmployeePayrollException("Employee with employeeId " + empId + " does not exists..!!"));
+    }
+
+    @Override
+    public List<EmployeePayrollData> getEmployeesByDepartment(String department) {
+        return employeeRepository.findEmployeesByDepartment(department);
     }
 
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData empData = null;
         empData = new EmployeePayrollData(empPayrollDTO);
-        log.debug("Emp Data : "+empData.toString());
+        log.debug("Emp Data : " + empData.toString());
         return employeeRepository.save(empData);
     }
 
