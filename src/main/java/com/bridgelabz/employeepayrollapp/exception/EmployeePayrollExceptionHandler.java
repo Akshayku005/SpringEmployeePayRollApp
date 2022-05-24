@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @Slf4j
 public class EmployeePayrollExceptionHandler {
-
     private static final String message = "Exception while processing REST Request";
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

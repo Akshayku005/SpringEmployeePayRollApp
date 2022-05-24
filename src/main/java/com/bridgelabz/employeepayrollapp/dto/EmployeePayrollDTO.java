@@ -30,6 +30,5 @@ public @ToString class EmployeePayrollDTO {
 
     @NotNull(message = "Department should not be Empty")
     public List<String> department;
-
 }
 
